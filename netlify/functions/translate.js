@@ -60,7 +60,7 @@ exports.handler = async function (event) {
 ${text}`;
 
   const requestBody = JSON.stringify({
-    model: "llama3-70b-8192",
+    model: "llama-3.3-70b-versatile",
     max_tokens: 1000,
     messages: [{ role: "user", content: prompt }],
   });
