@@ -1,6 +1,5 @@
 const https = require("https");
 
-// CORS headers لكل الردود
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "Content-Type",
@@ -9,17 +8,14 @@ const CORS = {
 };
 
 exports.handler = async function (event) {
-  // Handle preflight
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 204, headers: CORS, body: "" };
   }
 
-  // Only POST
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: "Method Not Allowed" }) };
   }
 
-  // Parse body
   let body;
   try {
     body = JSON.parse(event.body);
@@ -28,26 +24,22 @@ exports.handler = async function (event) {
   }
 
   const { text, country, style } = body;
-  // dialect اختياري — نستخدم country كبديل إذا لم يُرسَل
   const dialect = body.dialect || country;
 
-  // التحقق من الحقول الأساسية فقط
   if (!text || !country || !style) {
     return {
       statusCode: 400,
       headers: CORS,
-      body: JSON.stringify({ error: "بيانات ناقصة: text أو country أو style" }),
+      body: JSON.stringify({ error: "بيانات ناقصة: text او country او style" }),
     };
   }
 
-  // التحقق من وجود API Key
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    console.error("GROQ_API_KEY غير موجود في Environment Variables");
     return {
       statusCode: 500,
       headers: CORS,
-      body: JSON.stringify({ error: "خطأ في إعداد الخادم" }),
+      body: JSON.stringify({ error: "GROQ_API_KEY غير موجود" }),
     };
   }
 
@@ -73,7 +65,6 @@ ${text}`;
     messages: [{ role: "user", content: prompt }],
   });
 
-  // استخدام https مباشرة بدل fetch لضمان العمل في كل إصدارات Node
   return new Promise((resolve) => {
     const options = {
       hostname: "api.groq.com",
@@ -91,12 +82,18 @@ ${text}`;
       res.on("data", (chunk) => { data += chunk; });
       res.on("end", () => {
         try {
+          // أرجع الخطأ الكامل من Groq
           if (res.statusCode !== 200) {
-            console.error("Groq API error:", res.statusCode, data);
+            let groqMsg = data;
+            try {
+              const parsedErr = JSON.parse(data);
+              groqMsg = parsedErr.error?.message || parsedErr.error || data;
+            } catch {}
+            console.error("Groq error:", res.statusCode, data);
             resolve({
               statusCode: 502,
               headers: CORS,
-              body: JSON.stringify({ error: `خطأ من Groq: ${res.statusCode}` }),
+              body: JSON.stringify({ error: `Groq ${res.statusCode}: ${groqMsg}` }),
             });
             return;
           }
@@ -120,22 +117,20 @@ ${text}`;
           });
 
         } catch (parseErr) {
-          console.error("Parse error:", parseErr);
           resolve({
             statusCode: 500,
             headers: CORS,
-            body: JSON.stringify({ error: "خطأ في معالجة الرد" }),
+            body: JSON.stringify({ error: "خطأ في معالجة الرد: " + parseErr.message }),
           });
         }
       });
     });
 
     req.on("error", (err) => {
-      console.error("Request error:", err);
       resolve({
         statusCode: 500,
         headers: CORS,
-        body: JSON.stringify({ error: "فشل الاتصال بالخادم" }),
+        body: JSON.stringify({ error: "فشل الاتصال: " + err.message }),
       });
     });
 
