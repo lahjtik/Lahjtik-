@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لهجتك — اكتب بأسلوب أهل كل بلد عربي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0A0A0F;
+  --ink-2: #111118;
+  --ink-3: #18181F;
+  --ink-4: #202028;
+  --gold: #D4A843;
+  --gold-2: #E8C46A;
+  --gold-dim: rgba(212,168,67,0.15);
+  --gold-border: rgba(212,168,67,0.25);
+  --text: #EDE8DC;
+  --text-2: #A89F8C;
+  --text-3: #5C5650;
+  --red: #E05555;
+  --green: #4CAF7D;
+  --r: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════
+   BACKGROUND
+═══════════════════════════════ */
+.bg-layer {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, rgba(212,168,67,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, rgba(212,168,67,0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 30% at 0% 60%, rgba(212,168,67,0.03) 0%, transparent 50%);
+}
+
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+}
+
+/* ═══════════════════════════════
+   TOP BAR
+═══════════════════════════════ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 0 24px;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.topbar-logo {
+  font-family: 'Amiri', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.topbar-logo span { color: var(--text-2); font-size: 13px; font-family: 'Tajawal'; font-weight: 400; margin-right: 8px; }
+
+.usage-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.usage-badge .num {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.usage-bar {
+  width: 60px; height: 4px;
+  background: var(--ink-4);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.usage-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.hero {
+  position: relative; z-index: 1;
+  padding: 110px 24px 60px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 28px;
+  animation: fadeDown 0.7s ease both;
+}
+
+.hero-tag::before { content: '✦'; }
+
+.hero h1 {
+  font-family: 'Amiri', serif;
+  font-size: clamp(42px, 9vw, 72px);
+  line-height: 1.15;
+  font-weight: 700;
+  margin-bottom: 20px;
+  animation: fadeDown 0.7s 0.1s ease both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+  position: relative;
+}
+
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; right: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.hero-sub {
+  font-size: 17px;
+  color: var(--text-2);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto 36px;
+  animation: fadeDown 0.7s 0.2s ease both;
+}
+
+/* Before/After demo */
+.demo-cards {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 50px;
+  animation: fadeDown 0.7s 0.3s ease both;
+  max-width: 600px;
+  margin-left: auto; margin-right: auto;
+  margin-bottom: 50px;
+}
+
+.demo-card {
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  padding: 16px;
+  text-align: right;
+}
+
+.demo-card .label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.demo-card .text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.demo-card.after {
+  border-color: rgba(212,168,67,0.5);
+  background: rgba(212,168,67,0.05);
+}
+
+.demo-card.after .text { color: var(--text); }
+
+.demo-arrow {
+  color: var(--gold);
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), #B8882A);
+  color: var(--ink);
+  font-family: 'Tajawal'; font-size: 17px; font-weight: 700;
+  padding: 15px 36px;
+  border-radius: 50px;
+  border: none; cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(212,168,67,0.25);
+  animation: fadeDown 0.7s 0.4s ease both;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px rgba(212,168,67,0.4);
+}
+
+/* ═══════════════════════════════
+   STATS BAR
+═══════════════════════════════ */
+.stats-bar {
+  position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gold-border);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  overflow: hidden;
+  animation: fadeUp 0.7s 0.5s ease both;
+}
+
+.stat {
+  background: var(--ink-2);
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Amiri', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════
+   TOOL SECTION
+═══════════════════════════════ */
+.tool-section {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.tool-card {
+  background: var(--ink-2);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+.tool-header {
+  background: var(--ink-3);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.tool-title {
+  font-family: 'Amiri', serif;
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.step-indicator {
+  display: flex; gap: 8px; align-items: center;
+}
+
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ink-4);
+  border: 1px solid var(--gold-border);
+  transition: all 0.3s;
+}
+
+.step-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.tool-body { padding: 28px 24px; }
+
+/* Country Grid */
+.section-title {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-border), transparent);
+}
+
+.countries-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.country-btn {
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  color: var(--text-2);
+  padding: 12px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Tajawal';
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+
+.country-btn .flag { font-size: 20px; }
+.country-btn:hover { border-color: rgba(212,168,67,0.5); color: var(--text); transform: translateY(-1px); }
+.country-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+  box-shadow: 0 0 15px rgba(212,168,67,0.15);
+}
+
+/* Style Grid */
+.styles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.style-btn {
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  color: var(--text-2);
+  padding: 12px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Tajawal';
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.style-btn:hover { border-color: rgba(212,168,67,0.5); color: var(--text); }
+.style-btn.active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+/* Textarea */
+.textarea-wrap { position: relative; margin-bottom: 16px; }
+
+textarea {
+  width: 100%;
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  color: var(--text);
+  font-family: 'Tajawal';
+  font-size: 15px;
+  line-height: 1.9;
+  padding: 18px 18px 40px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.3s;
+  min-height: 130px;
+}
+
+textarea:focus { border-color: rgba(212,168,67,0.6); }
+textarea::placeholder { color: var(--text-3); font-weight: 300; }
+
+.char-hint {
+  position: absolute; bottom: 12px; left: 14px;
+  font-size: 11px; color: var(--text-3);
+}
+
+/* Translate Button */
+.translate-btn {
+  width: 100%;
+  padding: 17px;
+  background: linear-gradient(135deg, var(--gold), #A8772A);
+  border: none; border-radius: var(--r);
+  color: var(--ink);
+  font-family: 'Tajawal'; font-size: 17px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative; overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.translate-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+
+.translate-btn:hover::after { opacity: 1; }
+.translate-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(212,168,67,0.35); }
+.translate-btn:active { transform: translateY(0); }
+.translate-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Result */
+.result-box {
+  margin-top: 20px;
+  background: var(--ink-3);
+  border: 1px solid rgba(212,168,67,0.4);
+  border-radius: var(--r);
+  overflow: hidden;
+  display: none;
+  animation: fadeUp 0.4s ease both;
+}
+
+.result-box.show { display: block; }
+
+.result-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 18px;
+  background: rgba(212,168,67,0.07);
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.result-label {
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--gold); text-transform: uppercase; font-weight: 700;
+}
+
+.result-actions { display: flex; gap: 8px; }
+
+.action-btn {
+  background: transparent;
+  border: 1px solid var(--gold-border);
+  color: var(--text-2);
+  font-family: 'Tajawal'; font-size: 12px;
+  padding: 5px 12px; border-radius: 6px;
+  cursor: pointer; transition: all 0.2s;
+}
+
+.action-btn:hover { border-color: var(--gold); color: var(--gold); }
+.action-btn.share-btn { color: var(--gold-2); border-color: rgba(212,168,67,0.4); }
+
+.result-text {
+  padding: 20px 18px;
+  font-size: 16px;
+  line-height: 2;
+  color: var(--text);
+  white-space: pre-wrap;
+  min-height: 70px;
+}
+
+/* Loading */
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots span {
+  width: 7px; height: 7px;
+  background: var(--gold); border-radius: 50%;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Error */
+.error-toast {
+  background: rgba(224,85,85,0.1);
+  border: 1px solid rgba(224,85,85,0.35);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: #FF9090;
+  font-size: 14px;
+  margin-top: 12px;
+  display: none;
+}
+.error-toast.show { display: block; }
+
+/* Limit Warning */
+.limit-box {
+  background: rgba(212,168,67,0.06);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+  margin-top: 16px;
+  display: none;
+}
+.limit-box.show { display: block; }
+.limit-box h3 { color: var(--gold); font-size: 18px; margin-bottom: 8px; }
+.limit-box p { color: var(--text-2); font-size: 14px; line-height: 1.7; }
+.limit-box .reset-hint { color: var(--text-3); font-size: 12px; margin-top: 10px; }
+
+/* ═══════════════════════════════
+   SHARE MODAL
+═══════════════════════════════ */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+
+.modal {
+  background: var(--ink-2);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 420px; width: 100%;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+  text-align: center;
+}
+
+.modal-overlay.show .modal { transform: translateY(0); }
+
+.modal h2 {
+  font-family: 'Amiri', serif;
+  font-size: 26px; color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.modal p { color: var(--text-2); font-size: 14px; line-height: 1.7; margin-bottom: 22px; }
+
+.share-url {
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  word-break: break-all;
+  margin-bottom: 16px;
+  text-align: left;
+  direction: ltr;
+}
+
+.share-buttons { display: flex; flex-direction: column; gap: 10px; }
+
+.share-wa {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  border: none; border-radius: 10px;
+  padding: 13px; font-family: 'Tajawal'; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.share-wa:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
+
+.share-copy-link {
+  background: var(--ink-3);
+  border: 1px solid var(--gold-border);
+  color: var(--text-2);
+  border-radius: 10px;
+  padding: 13px; font-family: 'Tajawal'; font-size: 15px;
+  cursor: pointer; transition: all 0.2s;
+}
+.share-copy-link:hover { border-color: var(--gold); color: var(--gold); }
+
+.modal-close {
+  background: transparent; border: none;
+  color: var(--text-3); font-size: 13px;
+  cursor: pointer; margin-top: 14px;
+  font-family: 'Tajawal';
+}
+.modal-close:hover { color: var(--text-2); }
+
+/* ═══════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════ */
+.how-section {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.section-heading h2 {
+  font-family: 'Amiri', serif;
+  font-size: 34px; color: var(--text);
+  margin-bottom: 10px;
+}
+
+.section-heading p { color: var(--text-2); font-size: 15px; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.step-card {
+  background: var(--ink-2);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.step-card:hover { border-color: rgba(212,168,67,0.5); }
+
+.step-num {
+  font-family: 'Amiri', serif;
+  font-size: 40px;
+  color: var(--gold-dim);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.step-card h3 { font-size: 15px; color: var(--text); margin-bottom: 8px; font-weight: 600; }
+.step-card p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+/* ═══════════════════════════════
+   EXAMPLES
+═══════════════════════════════ */
+.examples-section {
+  position: relative; z-index: 1;
+  max-width: 780px; margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.example-card {
+  background: var(--ink-2);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--r);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+
+.example-card:hover {
+  border-color: rgba(212,168,67,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.example-tag {
+  display: inline-flex; gap: 6px; align-items: center;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px; color: var(--gold); font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.example-card h4 { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+.example-card p { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--gold-border);
+  padding: 30px 24px;
+  text-align: center;
+}
+
+footer .footer-logo {
+  font-family: 'Amiri', serif;
+  font-size: 24px; color: var(--gold);
+  margin-bottom: 8px;
+}
+
+footer p { color: var(--text-3); font-size: 13px; }
+
+/* ═══════════════════════════════
+   ANIMATIONS
+═══════════════════════════════ */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════════════════════════
+   CURSOR
+═══════════════════════════════ */
+.blink {
+  display: inline-block; width: 2px; height: 17px;
+  background: var(--gold);
+  animation: blinkAnim 0.75s infinite;
+  vertical-align: middle; margin-right: 1px;
+}
+@keyframes blinkAnim { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ═══════════════════════════════
+   RESPONSIVE
+═══════════════════════════════ */
+@media (max-width: 600px) {
+  .countries-grid { grid-template-columns: repeat(4, 1fr); }
+  .styles-grid { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid { grid-template-columns: 1fr; }
+  .examples-grid { grid-template-columns: 1fr; }
+  .demo-cards { grid-template-columns: 1fr; }
+  .demo-arrow { transform: rotate(90deg); }
+  .stats-bar { grid-template-columns: repeat(3,1fr); padding-bottom: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-grid"></div>
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="topbar-logo">لهجتك <span>| مترجم الأسلوب العربي</span></div>
+  <div class="usage-badge">
+    <span>متبقي</span>
+    <span class="num" id="usageNum">10</span>
+    <div class="usage-bar"><div class="usage-fill" id="usageFill" style="width:100%"></div></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">ذكاء اصطناعي عربي مجاناً</div>
+  <h1>اكتب بـ<em>لهجتك</em><br>أينما كنت</h1>
+  <p class="hero-sub">لا تكتفِ بترجمة الكلمات — تكلّم بأسلوب أهل كل بلد عربي. رسائل عمل، واتساب، إعلانات، وأكثر.</p>
+
+  <div class="demo-cards">
+    <div class="demo-card">
+      <div class="label">النص الأصلي</div>
+      <div class="text">نريد نعرض عليكم منتجنا الجديد بسعر مناسب</div>
+    </div>
+    <div class="demo-arrow">←</div>
+    <div class="demo-card after">
+      <div class="label">🇸🇦 بأسلوب سعودي رسمي</div>
+      <div class="text">يسعدنا أن نتشرف بتقديم منتجنا الجديد بأسعار تنافسية تلائم تطلعاتكم الكريمة</div>
+    </div>
+  </div>
+
+  <a href="#tool" class="hero-cta">جرّب الآن مجاناً ←</a>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar" style="margin-bottom:60px">
+  <div class="stat"><span class="stat-num">8</span><div class="stat-label">لهجة عربية</div></div>
+  <div class="stat"><span class="stat-num">6</span><div class="stat-label">أسلوب كتابي</div></div>
+  <div class="stat"><span class="stat-num">10</span><div class="stat-label">استخدام يومي مجاني</div></div>
+</div>
+
+<!-- TOOL -->
+<section class="tool-section" id="tool">
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-title">✦ لهجتك</div>
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot1"></div>
+        <div class="step-dot" id="dot2"></div>
+        <div class="step-dot" id="dot3"></div>
+      </div>
+    </div>
+    <div class="tool-body">
+
+      <!-- Step 1: Country -->
+      <div class="section-title">١ — اختر البلد</div>
+      <div class="countries-grid" id="countriesGrid">
+        <button class="country-btn" data-country="السعودية" data-dialect="سعودي خليجي رسمي"><span class="flag">🇸🇦</span>السعودية</button>
+        <button class="country-btn" data-country="مصر" data-dialect="مصري"><span class="flag">🇪🇬</span>مصر</button>
+        <button class="country-btn" data-country="الإمارات" data-dialect="إماراتي خليجي"><span class="flag">🇦🇪</span>الإمارات</button>
+        <button class="country-btn" data-country="الكويت" data-dialect="كويتي خليجي"><span class="flag">🇰🇼</span>الكويت</button>
+        <button class="country-btn" data-country="العراق" data-dialect="عراقي"><span class="flag">🇮🇶</span>العراق</button>
+        <button class="country-btn" data-country="المغرب" data-dialect="مغربي دارجة"><span class="flag">🇲🇦</span>المغرب</button>
+        <button class="country-btn" data-country="الأردن" data-dialect="أردني شامي"><span class="flag">🇯🇴</span>الأردن</button>
+        <button class="country-btn" data-country="لبنان" data-dialect="لبناني شامي"><span class="flag">🇱🇧</span>لبنان</button>
+      </div>
+
+      <!-- Step 2: Style -->
+      <div class="section-title">٢ — نوع الأسلوب</div>
+      <div class="styles-grid" id="stylesGrid">
+        <button class="style-btn" data-style="رسمي ومحترف">🤝 رسمي</button>
+        <button class="style-btn" data-style="ودي وعفوي">😊 ودي</button>
+        <button class="style-btn" data-style="مقنع وتسويقي">🔥 تسويقي</button>
+        <button class="style-btn" data-style="عاطفي ومؤثر">💛 عاطفي</button>
+        <button class="style-btn" data-style="واتساب يومي">💬 واتساب</button>
+        <button class="style-btn" data-style="إعلان سوشيال ميديا">📱 إعلان</button>
+      </div>
+
+      <!-- Step 3: Text -->
+      <div class="section-title">٣ — اكتب نصك</div>
+      <div class="textarea-wrap">
+        <textarea id="inputText" placeholder="اكتب أي نص هنا... رسالة، إعلان، عرض، شكر، اعتذار — بأي لغة أو لهجة تريد" maxlength="800"></textarea>
+        <span class="char-hint"><span id="charNum">0</span>/800</span>
+      </div>
+
+      <button class="translate-btn" id="translateBtn" onclick="doTranslate()">✦ حوّل الأسلوب الآن</button>
+
+      <div class="error-toast" id="errBox"></div>
+      <div class="limit-box" id="limitBox">
+        <h3>🎉 استنفدت استخداماتك اليوم!</h3>
+        <p>استخدمت كامل الـ 10 تحويلات المجانية اليومية.<br>شارك الأداة مع أصدقائك وساعدنا في النمو!</p>
+        <p class="reset-hint">تتجدد الاستخدامات تلقائياً كل يوم منتصف الليل ⏰</p>
+      </div>
+
+      <!-- Result -->
+      <div class="result-box" id="resultBox">
+        <div class="result-top">
+          <span class="result-label">✦ النتيجة</span>
+          <div class="result-actions">
+            <button class="action-btn" onclick="copyResult()">نسخ</button>
+            <button class="action-btn share-btn" onclick="openShare()">✦ شارك الأداة</button>
+          </div>
+        </div>
+        <div class="result-text" id="resultText"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-heading">
+    <h2>كيف تعمل لهجتك؟</h2>
+    <p>ثلاث خطوات وتحصل على نص يبدو كأن أهل البلد كتبوه</p>
+  </div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">١</div>
+      <h3>اختر البلد والأسلوب</h3>
+      <p>حدد البلد الذي تريد مخاطبته ونوع الأسلوب المناسب للموقف</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">٢</div>
+      <h3>اكتب نصك بأي لغة</h3>
+      <p>اكتب فكرتك بأي لغة أو لهجة — الذكاء الاصطناعي يفهم ويحوّل</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">٣</div>
+      <h3>احصل على النص المحوّل</h3>
+      <p>في ثوانٍ تحصل على نص يناسب ثقافة البلد وأسلوب أهله تماماً</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLES -->
+<section class="examples-section">
+  <div class="section-heading">
+    <h2>من يستخدم لهجتك؟</h2>
+    <p>آلاف الحالات اليومية التي تحتاج الأسلوب الصح</p>
+  </div>
+  <div class="examples-grid">
+    <div class="example-card" onclick="fillExample('تاجر')">
+      <div class="example-tag">🛒 تجارة</div>
+      <h4>تاجر عراقي ← عميل سعودي</h4>
+      <p>تواصل مع عملائك في الخليج بأسلوبهم الرسمي المحترم دون أخطاء ثقافية</p>
+    </div>
+    <div class="example-card" onclick="fillExample('موظف')">
+      <div class="example-tag">💼 عمل</div>
+      <h4>رسالة واتساب ← إيميل رسمي</h4>
+      <p>حوّل ملاحظاتك اليومية إلى مراسلات مهنية تليق بالعمل</p>
+    </div>
+    <div class="example-card" onclick="fillExample('اعلان')">
+      <div class="example-tag">📢 تسويق</div>
+      <h4>إعلان بأسلوب كل بلد</h4>
+      <p>إعلانك بالأسلوب المصري يختلف عن السعودي والإماراتي — لهجتك تعرف الفرق</p>
+    </div>
+    <div class="example-card" onclick="fillExample('شكر')">
+      <div class="example-tag">💛 تواصل</div>
+      <h4>رسائل شكر واعتذار</h4>
+      <p>عبّر عن مشاعرك بالأسلوب الصح الذي يصل للقلب في كل ثقافة عربية</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">لهجتك</div>
+  <p>مترجم الأسلوب العربي — مجاني للجميع • مدعوم بالذكاء الاصطناعي</p>
+</footer>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal">
+    <h2>✦ شارك لهجتك</h2>
+    <p>ساعد أصدقاءك وزملاءك في التواصل بالأسلوب الصح مع كل العرب</p>
+    <div class="share-url" id="shareUrl">lahjtik.netlify.app</div>
+    <div class="share-buttons">
+      <button class="share-wa" onclick="shareWhatsApp()">📱 شارك على واتساب</button>
+      <button class="share-copy-link" onclick="copyLink()">🔗 نسخ الرابط</button>
+    </div>
+    <button class="modal-close" onclick="closeShare()">إغلاق</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════ STATE ═══════════════
+const DAILY_LIMIT = 10;
+const SITE_URL = 'lahjtik.netlify.app';
+const SHARE_MSG = `جربت "لهجتك" — أداة ذكاء اصطناعي مجانية تكتب بأسلوب أي بلد عربي! 🔥\n\n${SITE_URL}`;
+
+let selectedCountry = null;
+let selectedDialect = null;
+let selectedStyle = null;
+
+// ═══════════════ USAGE ═══════════════
+function getUsage() {
+  const today = new Date().toDateString();
+  const stored = JSON.parse(localStorage.getItem('lahjtik_usage') || '{}');
+  if (stored.date !== today) return { date: today, count: 0 };
+  return stored;
+}
+
+function saveUsage(data) {
+  localStorage.setItem('lahjtik_usage', JSON.stringify(data));
+}
+
+function updateUsageUI() {
+  const usage = getUsage();
+  const remaining = Math.max(0, DAILY_LIMIT - usage.count);
+  document.getElementById('usageNum').textContent = remaining;
+  const pct = (remaining / DAILY_LIMIT) * 100;
+  document.getElementById('usageFill').style.width = pct + '%';
+  document.getElementById('usageFill').style.background =
+    pct > 50 ? 'linear-gradient(90deg,var(--gold),var(--gold-2))' :
+    pct > 20 ? 'linear-gradient(90deg,#C4853A,#E0A040)' :
+    'linear-gradient(90deg,var(--red),#FF8080)';
+}
+
+updateUsageUI();
+
+// ═══════════════ CHAR COUNTER ═══════════════
+document.getElementById('inputText').addEventListener('input', function() {
+  document.getElementById('charNum').textContent = this.value.length;
+  // Update step dots
+  const hasTxt = this.value.trim().length > 0;
+  document.getElementById('dot3').classList.toggle('active', hasTxt);
+});
+
+// ═══════════════ SELECTION ═══════════════
+document.getElementById('countriesGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.country-btn');
+  if (!btn) return;
+  document.querySelectorAll('.country-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCountry = btn.dataset.country;
+  selectedDialect = btn.dataset.dialect;
+  document.getElementById('dot1').classList.add('active');
+});
+
+document.getElementById('stylesGrid').addEventListener('click', e => {
+  const btn = e.target.closest('.style-btn');
+  if (!btn) return;
+  document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedStyle = btn.dataset.style;
+  document.getElementById('dot2').classList.add('active');
+});
+
+// ═══════════════ FILL EXAMPLES ═══════════════
+const examples = {
+  'تاجر': { text: 'نريد نعرض عليكم منتجنا الجديد بأفضل سعر وأعلى جودة', country: 'السعودية', dialect: 'سعودي خليجي رسمي', style: 'رسمي ومحترف' },
+  'موظف': { text: 'تأخرت بالرد لأني كنت مشغول بس المشروع جاهز الآن', country: 'الإمارات', dialect: 'إماراتي خليجي', style: 'رسمي ومحترف' },
+  'اعلان': { text: 'منتج جديد بخصم 30% لفترة محدودة اشتري الآن', country: 'مصر', dialect: 'مصري', style: 'مقنع وتسويقي' },
+  'شكر': { text: 'شكراً جزيلاً على مساعدتك الكريمة ما قدرت أتجاوز هذا الموقف بدونك', country: 'لبنان', dialect: 'لبناني شامي', style: 'عاطفي ومؤثر' }
+};
+
+function fillExample(type) {
+  const ex = examples[type];
+  if (!ex) return;
+  document.getElementById('inputText').value = ex.text;
+  document.getElementById('charNum').textContent = ex.text.length;
+  selectedCountry = ex.country;
+  selectedDialect = ex.dialect;
+  selectedStyle = ex.style;
+  document.querySelectorAll('.country-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.country === ex.country);
+  });
+  document.querySelectorAll('.style-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.style === ex.style);
+  });
+  document.getElementById('dot1').classList.add('active');
+  document.getElementById('dot2').classList.add('active');
+  document.getElementById('dot3').classList.add('active');
+  document.getElementById('tool').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ═══════════════ TRANSLATE ═══════════════
+async function doTranslate() {
+  hideError();
+
+  const usage = getUsage();
+  if (usage.count >= DAILY_LIMIT) {
+    document.getElementById('limitBox').classList.add('show');
+    document.getElementById('translateBtn').disabled = true;
+    return;
+  }
+
+  const text = document.getElementById('inputText').value.trim();
+  if (!selectedCountry) return showError('⚠️ اختر البلد أولاً');
+  if (!selectedStyle) return showError('⚠️ اختر نوع الأسلوب');
+  if (!text) return showError('⚠️ اكتب النص الذي تريد تحويله');
+
+  const btn = document.getElementById('translateBtn');
+  const resultBox = document.getElementById('resultBox');
+  const resultText = document.getElementById('resultText');
+
+  btn.disabled = true;
+  btn.textContent = 'جاري التحويل...';
+  resultBox.classList.add('show');
+  resultText.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
+
+  try {
+    const res = await fetch("/.netlify/functions/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        text,
+        country: selectedCountry,
+        dialect: selectedDialect,
+        style:   selectedStyle,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok || !data.result) throw new Error(data.error || 'حدث خطأ، حاول لاحقاً');
+    const output = data.result;
+
+    // Save usage
+    usage.count++;
+    saveUsage(usage);
+    updateUsageUI();
+
+    // Typewriter
+    resultText.innerHTML = '<span class="blink"></span>';
+    let i = 0;
+    const speed = Math.max(12, Math.min(35, 1800 / output.length));
+    function type() {
+      if (i < output.length) {
+        const cursor = resultText.querySelector('.blink');
+        if (cursor) cursor.insertAdjacentText('beforebegin', output[i]);
+        else resultText.textContent += output[i];
+        i++;
+        setTimeout(type, speed);
+      } else {
+        const cursor = resultText.querySelector('.blink');
+        if (cursor) cursor.remove();
+        // Show limit box if used up
+        if (usage.count >= DAILY_LIMIT) {
+          setTimeout(() => document.getElementById('limitBox').classList.add('show'), 500);
+        }
+      }
+    }
+    type();
+
+  } catch (err) {
+    resultText.innerHTML = '';
+    resultBox.classList.remove('show');
+    showError(err.message || 'حدث خطأ، حاول لاحقاً');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✦ حوّل الأسلوب الآن';
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('errBox');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideError() {
+  document.getElementById('errBox').classList.remove('visible');
+  document.getElementById('errBox').classList.remove('show');
+}
+
+function copyResult() {
+  const text = document.getElementById('resultText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.action-btn');
+    btn.textContent = '✓ تم';
+    setTimeout(() => btn.textContent = 'نسخ', 2000);
+  });
+}
+
+// ═══════════════ SHARE ═══════════════
+function openShare() {
+  document.getElementById('shareModal').classList.add('show');
+}
+function closeShare() {
+  document.getElementById('shareModal').classList.remove('show');
+}
+function shareWhatsApp() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(SHARE_MSG), '_blank');
+}
+function copyLink() {
+  navigator.clipboard.writeText('https://' + SITE_URL).then(() => {
+    const btn = document.querySelector('.share-copy-link');
+    btn.textContent = '✓ تم النسخ!';
+    setTimeout(() => btn.textContent = '🔗 نسخ الرابط', 2000);
+  });
+}
+
+document.getElementById('shareModal').addEventListener('click', function(e) {
+  if (e.target === this) closeShare();
+});
+</script>
+</body>
+</html>
